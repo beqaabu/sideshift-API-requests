@@ -70,13 +70,14 @@ function requestQuote(inputCoin, outputCoin, depositAmount){
 }
 
 /*function that creates the fixed order*/
+
 function createFixedOrder(){
     const settleAddr = prompt('Enter your address: ');
     const depositAmount = prompt('Enter deposit amount: ');
     requestQuote(inputCoin, outputCoin, depositAmount);
     const data = {
         "type": "fixed",
-        "quoteId": quoteId,
+        "quoteId": quoteId,//this value should be obtained from requestQuote function
         "settleAddress": settleAddr,
         "affiliateId": "FYmcsJLUdb",
         "refundAddress": "19dENFt4wVwos6xtgwStA6n8bbA57WCS58"
@@ -98,6 +99,7 @@ function createFixedOrder(){
     })
 }
 
+/*function to create a variable order*/
 function createVariableOrder(inputCoin, outputCoin){
     const settleAddr = prompt('Enter your address: ');
     const depositAmountVariable = prompt('Enter deposit amount: ');
