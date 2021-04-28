@@ -5,15 +5,33 @@ const url = 'https://sideshift.ai/api/v1/pairs/';
 const inputCoin = prompt('C1: ');
 const outputCoin = prompt('C2: ');
 
-async function getRates(inputCoin, outputCoin){
-  let res = await fetch(url + inputCoin + '/' + outputCoin);
-  return res.json();
+function getRates(inputCoin, outputCoin){
+  return new Promise((resolve, reject) => {
+    fetch(url + inputCoin + '/' + outputCoin)
+    .then(data => {return data.json()})
+    .then(res => {
+      if(res.hasOwnProperty('error') == true)
+        reject(new Error("We dont have the given pair of coins"));
+    
+      resolve(
+        console.log('Minimum amount: ', res.min),
+        console.log('Maximum amount: ', res.max),
+        console.log('Exchange rate: ', res.rate)
+      );
+    })    
+    .catch((e) => e);
+  });
 }
 
-getRates(inputCoin, outputCoin)
-  .then(res => {return res})
-  .then(data => {
-    console.log(data);
-  })
-  .catch((e) => console.log(e));
+async function doRates(){
+  try{
+    const res = await getRates(inputCoin, outputCoin);
+    
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+
+doRates();
 
